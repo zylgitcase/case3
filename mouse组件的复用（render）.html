@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>React 实例</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+
+<div id="example"></div>
+<script type="text/babel">
+//import img from 'E:/cat.png'
+class Mouse extends React.Component{
+	state={
+		x:0,
+		y:0
+	}
+	handleMouseMove=e=>{
+		this.setState({
+			x:e.clientX,
+			y:e.clientY
+		})
+	}
+	componentDidMount(){
+		window.addEventListener('mousemove',this.handleMouseMove)
+	}
+	render(){
+		return this.props.render(this.state)
+	}
+}
+
+class App extends React.Component{
+	render(){
+		return(
+		 <div>
+		 <h1>render props 模式</h1>
+		 <Mouse 
+		 render ={mouse=>{
+		 	return(
+				<p>
+				鼠标位置：{mouse.x},{mouse.y}
+				</p>
+			)
+		 }}
+		 />
+		 
+		 {/*猫捉老鼠*/}
+		 <Mouse render={mouse=>{
+		 	return (
+			<img src={"E:/cat2.gif"} alt="cat"
+			style={{
+			position:'absolute',
+			top:mouse.y,
+			left:mouse.x
+			}}
+			/>
+			)
+			}}
+			/>
+		 
+		 
+		 </div>
+		)
+	}
+}
+
+
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('example')
+);
+</script>
+
+</body>
+</html>
